@@ -72,7 +72,7 @@ nav ul li a:hover, a.active{
     margin-top: 10px;
     word-spacing: 20px;
 }
-.booking-form  .calculations{
+.booking-form  {
     margin: 10px 0;
 }
 .booking-form  .calculations p{
@@ -119,4 +119,11 @@ nav ul li a:hover, a.active{
 .amount{
     display: flex;
     justify-content: space-between;
+}
+.calculations{
+    margin: 30px 0 10px;
+}
+
+.afterbook{
+    display: none;
 }

@@ -9,7 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
     <!-- Stylesheet -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -27,7 +29,7 @@
     </header>
 
     <!--Booking Section-->
-    <main class="main-content container">
+    <main id="bookingForm" class="main-content container">
         <div class="booking-form">
             <h3>Booking Flights</h3>
             <div class="input-group">
@@ -51,29 +53,32 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="firstClass" class="inp-style inp-width" type="number" name="" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <p>+ -</p>
+                    <button id="decreaseButton-1"  class="btn btn-default"><i  class="fas fa-minus"></i></button>
+                    <button id="increaseButton-1" class="btn btn-default"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
             
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="economy" class="inp-style inp-width" type="number" name="" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                    <button id="decreaseButton-2" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                    <button id="increaseButton-2" class="btn btn-default"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
+
             <div class="calculations">
                 <div class="amount">
                     <div class="left">
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p>$<span id="subtotal">500</span></p>
                     </div>
                 </div>
 
@@ -82,7 +87,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p>$<span id="vat">0</span></p>
                     </div>
                 </div>
                 <hr>
@@ -91,18 +96,94 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p>$ <span id="grandTotal">550</span></p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="bookingButton" class="btn-style">Book Now</button>
         </div>
 
         <div class="booking-content">
             <h1>discover <br> around the world</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
         </div>
+    </main>
+
+    <!-- after book -->
+    <section>
+        <div id="afterBook" class="afterbook container text-center p-5 mt-5 bg-light">
+            <h1>Your ticket has been booked!</h1>
+            <h5 class="p-2">Check your email for details</h5>
+        </div>
+        
     </section>
+
+    <script>
+
+                increaseValue("increaseButton-1","firstClass");
+                increaseValue("increaseButton-2","economy");
+                decreaseValue("decreaseButton-1","firstClass");
+                decreaseValue("decreaseButton-2","economy");
+                
+
+                // plus button
+                function increaseValue(firstId,secondId){
+
+                    document.getElementById(firstId).addEventListener('click', function(){
+                    const ticketQuantity = document.getElementById(secondId).value;
+                    const ticketQuantityNumber = parseFloat(ticketQuantity);
+                    document.getElementById(secondId).value = ticketQuantityNumber + 1;
+
+                    calculatingCost();
+
+                })
+                }
+                // munus button
+                function decreaseValue(firstId,secondId){
+                    document.getElementById(firstId).addEventListener('click', function(){
+                    const ticketQuantity = document.getElementById(secondId).value;
+                    const ticketQuantityNumber = parseFloat(ticketQuantity);
+
+                    if(ticketQuantityNumber>0){
+
+                        document.getElementById(secondId).value = ticketQuantityNumber - 1;
+
+                    }
+
+                    calculatingCost();
+
+                    })
+                }
+
+                // calculation
+                function calculatingCost(){
+                    const firstClassQuantity = document.getElementById("firstClass").value;
+                    const firstClassQuantityNumber = parseFloat(firstClassQuantity)*150;
+                    const secondClassQuantity = document.getElementById("economy").value;
+                    const secondClassQuantityNumber = parseFloat(secondClassQuantity)*100;
+                
+                    const subtotalCost = firstClassQuantityNumber + secondClassQuantityNumber;
+                    document.getElementById('subtotal').innerText = subtotalCost;
+
+                    const vat = subtotalCost*0.1;
+                    document.getElementById("vat").innerText = vat;
+
+                    const grandTotal = subtotalCost + vat;
+                    document.getElementById('grandTotal').innerText = grandTotal;
+
+                }
+
+                // buy now button
+
+                document.getElementById("bookingButton").addEventListener('click', function(){
+
+                    document.getElementById("bookingForm").style.display = "none";
+                    document.getElementById("afterBook").style.display = "block";
+
+                })
+               
+    </script>
+
 
     <!--Thank You-->
 </body>
